@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Raspberry Pi - WebSocket</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<label class="switch">
+    <input type="checkbox" id="state">
+    <span class="slider round"></span>
+</label>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+$(function () {
+    let socket = io(),
+        checkboxState = $('#state');
+
+    checkboxState.click(function () {
+        socket.emit('state', checkboxState.prop('checked'));
+
+        return false;
+    });
+
+    socket.on('state', function (state) {
+        checkboxState.prop('checked', state)
+    });
+
+});
+</script>
+</body>
+</html>
